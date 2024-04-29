@@ -1,23 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+
+import "./App.css";
+
+import tickers from "./stockTickers.json";
 
 function App() {
+  const [search, setSearch] = useState("");
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app-container">
+      <div className="search-container">
+        <div>
+          <input
+            type="text"
+            onChange={(e) => setSearch(e.target.value)}
+            value={search}
+            className="search-input-field"
+          />
+        </div>
+        <div className="search-dropdown-container">
+          {tickers
+            .filter((item) => {
+              if (search !== "") {
+                return (
+                  item.ticker.toLowerCase().includes(search.toLowerCase()) ||
+                  item.name.toLowerCase().includes(search.toLowerCase())
+                );
+              }
+            })
+            .map((item) => (
+              <div key={item.id}>
+                {item.name} <br />
+              </div>
+            ))}
+        </div>
+      </div>
     </div>
   );
 }
