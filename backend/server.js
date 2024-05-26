@@ -2,6 +2,7 @@ const express = require("express");
 const axios = require("axios");
 const cors = require("cors");
 const app = express();
+
 const PORT = 5000;
 
 app.use(cors());
@@ -11,11 +12,12 @@ app.get("/", async (req, res) => {
   res.status(200).send("Success!");
 });
 
-app.get("/figi", async (req, res) => {
+app.post("/figi", async (req, res) => {
   try {
     const response = await axios.post(
       "https://api.openfigi.com/v2/mapping",
-      [{ idType: "TICKER", idValue: "AAPL" }],
+      //[{ idType: "TICKER", idValue: "AAPL" }],
+      req.body,
       {
         headers: {
           "Content-Type": "application/json",
